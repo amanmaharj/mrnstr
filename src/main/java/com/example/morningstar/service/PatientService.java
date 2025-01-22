@@ -1,5 +1,7 @@
-package com.example.morningstar;
+package com.example.morningstar.service;
 
+import com.example.morningstar.entity.Patient;
+import com.example.morningstar.repo.PatientRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,10 @@ public class PatientService {
 
         if(patient.isMemoryCare() != existingpPatient.isMemoryCare()){
             existingpPatient.setMemoryCare(patient.isMemoryCare());
+        }
+
+        if(patient.getGuardians() != null){
+            existingpPatient.setGuardians(patient.getGuardians());
         }
 
         return patientRepo.save(existingpPatient);

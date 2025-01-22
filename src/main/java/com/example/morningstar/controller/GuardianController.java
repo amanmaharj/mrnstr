@@ -1,5 +1,7 @@
-package com.example.morningstar;
+package com.example.morningstar.controller;
 
+import com.example.morningstar.entity.Guardian;
+import com.example.morningstar.service.GuardianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

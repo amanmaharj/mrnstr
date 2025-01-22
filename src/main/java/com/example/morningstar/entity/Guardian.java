@@ -1,10 +1,13 @@
-package com.example.morningstar;
+package com.example.morningstar.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,10 +21,14 @@ public class Guardian {
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "guardianSequenceGenerator")
     @Id
-    Long g_id;
-    String firstName;
-    String lastName;
-    String address;
-    String phone;
+    private Long g_id;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String phone;
+    @ManyToMany(mappedBy = "guardians" , fetch = FetchType.LAZY)
+    //managed by json not jackson
+    @JsonBackReference
+    private Set<Patient> patients;
 
 }

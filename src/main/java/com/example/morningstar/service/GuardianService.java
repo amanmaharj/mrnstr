@@ -1,5 +1,7 @@
-package com.example.morningstar;
+package com.example.morningstar.service;
 
+import com.example.morningstar.entity.Guardian;
+import com.example.morningstar.repo.GuardianRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,20 +34,23 @@ public class GuardianService {
         Optional<Guardian> existingGuardian = guardianRepo.findById(id);
 
         if(existingGuardian.isPresent()){
-            if(guardian.firstName != null){
+            if(guardian.getFirstName() != null){
                 existingGuardian.get().setFirstName(guardian.getFirstName());
             }
 
-            if(guardian.lastName != null){
+            if(guardian.getLastName() != null){
                 existingGuardian.get().setLastName(guardian.getLastName());
             }
 
-            if(guardian.address != null) {
+            if(guardian.getAddress() != null) {
                 existingGuardian.get().setAddress(guardian.getAddress());
             }
 
-            if(guardian.phone != null){
+            if(guardian.getPhone() != null){
                 existingGuardian.get().setPhone(guardian.getPhone());
+            }
+            if(guardian.getPatients() != null){
+                existingGuardian.get().setPatients(guardian.getPatients());
             }
             return existingGuardian.get();
         }
