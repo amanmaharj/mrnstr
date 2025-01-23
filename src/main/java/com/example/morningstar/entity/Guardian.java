@@ -1,6 +1,9 @@
 package com.example.morningstar.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "guardian")
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "g_id")
 public class Guardian {
     @SequenceGenerator(name = "guardianSequenceGenerator",
             sequenceName = "guardianSequenceGenerator",initialValue = 1,allocationSize = 1
@@ -27,8 +31,7 @@ public class Guardian {
     private String address;
     private String phone;
     @ManyToMany(mappedBy = "guardians" , fetch = FetchType.LAZY)
-    //managed by json not jackson
-    @JsonBackReference
+
     private Set<Patient> patients;
 
 }
