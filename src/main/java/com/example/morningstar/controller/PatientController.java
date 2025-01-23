@@ -27,9 +27,9 @@ public class PatientController {
 
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Patient> updateIntoDB(@RequestBody Patient patient,@PathVariable Long id) {
-        return new ResponseEntity<>(patientService.updatePatient(patient, id), HttpStatus.OK);
+    @PutMapping("/update-patient/{id}/update-guardian")
+    public ResponseEntity<Patient> updateIntoDB(@RequestBody(required = false) Patient patient,@PathVariable Long id,@RequestParam(required = false) Long g_id) throws Exception {
+        return new ResponseEntity<>(patientService.updatePatient(patient, id, g_id), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

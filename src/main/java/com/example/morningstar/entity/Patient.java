@@ -1,6 +1,7 @@
 package com.example.morningstar.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "patient")
 @Entity
+//to avoid nested loop we are using JSONIDENTITYINFO when deserializing
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Patient {
     @Id
             @SequenceGenerator(name = "patient",
@@ -34,7 +37,6 @@ private boolean memoryCare;
         inverseJoinColumns = @JoinColumn(name = "Guardian_id", referencedColumnName = "g_id")
 
 )
-//This will say it is managed by json but not jackson
-@JsonManagedReference
+
 private Set<Guardian> guardians;
 }
