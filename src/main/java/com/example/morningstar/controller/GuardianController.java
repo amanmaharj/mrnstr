@@ -24,13 +24,13 @@ public class GuardianController {
         return new ResponseEntity<>(guardianService.saveInDB(guardian), HttpStatus.OK);
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteFromDbByID(@PathVariable Long id) {
+    public ResponseEntity<?> deleteFromDbByID(@PathVariable Long id) {
         return new ResponseEntity<>(guardianService.deleteByID(id), HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Object> updateGuardian(@RequestBody Guardian guardian,@PathVariable Long id){
-        return new ResponseEntity<>(guardianService.updateGuardian(guardian, id) , HttpStatus.OK);
+    @PutMapping("/update-guardian/{g_id}/update-parent/{id}")
+    public ResponseEntity<Object> updateGuardian(@RequestBody Guardian guardian,@PathVariable Long g_id, @PathVariable(required = false) Long id){
+        return new ResponseEntity<>(guardianService.updateGuardian(guardian, g_id, id) , HttpStatus.OK);
     }
 
 }
