@@ -30,7 +30,7 @@ public class Guardian {
     private String lastName;
     private String address;
     private String phone;
-    @ManyToMany(mappedBy = "guardians" , fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "guardians" ,cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
 
     private Set<Patient> patients;
 

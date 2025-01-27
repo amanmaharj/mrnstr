@@ -28,12 +28,12 @@ public class PatientController {
     }
 
     @PutMapping("/update-patient/{id}/update-guardian")
-    public ResponseEntity<Patient> updateIntoDB(@RequestBody(required = false) Patient patient,@PathVariable Long id,@RequestParam(required = false) Long g_id) throws Exception {
+    public ResponseEntity<?> updateIntoDB(@RequestBody(required = false) Patient patient,@PathVariable Long id,@RequestParam(required = false) Long g_id) throws Exception {
         return new ResponseEntity<>(patientService.updatePatient(patient, id, g_id), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deletePatientById(@PathVariable long id){
+    public ResponseEntity<?> deletePatientById(@PathVariable long id){
 
         return new ResponseEntity<>(patientService.deletePatientById(id), HttpStatus.OK);
     }
