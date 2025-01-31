@@ -28,8 +28,8 @@ public class GuardianController {
         return new ResponseEntity<>(guardianService.deleteByID(id), HttpStatus.OK);
     }
 
-    @PutMapping("/update-guardian/{g_id}/update-parent/{id}")
-    public ResponseEntity<Object> updateGuardian(@RequestBody Guardian guardian,@PathVariable Long g_id, @PathVariable(required = false) Long id){
+    @PutMapping("/{g_id}/update-parent")
+    public ResponseEntity<Object> updateGuardian(@RequestBody(required = false) Guardian guardian,@PathVariable Long g_id, @RequestParam(name = "id", required = false) Long id){
         return new ResponseEntity<>(guardianService.updateGuardian(guardian, g_id, id) , HttpStatus.OK);
     }
 

@@ -66,52 +66,48 @@ public class GuardianService {
 
     @Transactional
     public Object updateGuardian(Guardian guardian, Long g_id, Long id) {
-        Guardian existingGuardian;
-        try{
-            existingGuardian = guardianRepo.findById(g_id).orElseThrow(()->new PatientNotFound("Guardian cannot be found"));
 
+        try{
+            Guardian existingGuardian = guardianRepo.findById(g_id).orElseThrow(()->new PatientNotFound("Guardian cannot be found"));
+            if(guardian!=null && id==null){
+                if(guardian.getFirstName() != null){
+                    existingGuardian.setFirstName(guardian.getFirstName());
+                }
+
+                if(guardian.getLastName() != null){
+                    existingGuardian.setLastName(guardian.getLastName());
+                }
+
+                if(guardian.getAddress() != null) {
+                    existingGuardian.setAddress(guardian.getAddress());
+                }
+
+                if(guardian.getPhone() != null){
+                    existingGuardian.setPhone(guardian.getPhone());
+                }
+                if(guardian.getPatients() != null){
+                    existingGuardian.setPatients(guardian.getPatients());
+                }
+
+            }else if((guardian==null || guardian.getPatients()==null)&& id!=null){
+
+                try{
+                    Patient existingPatient = patientRepo.findById(id).orElseThrow(()->new PatientNotFound("patient cannot be found"));
+                    Set<Patient> existingPatintSet = existingGuardian.getPatients();
+                    existingPatintSet.add(existingPatient);
+
+                    existingGuardian.setPatients(existingPatintSet);
+                }catch(PatientNotFound exception){
+                    String msg = "The Patient with id : " + id +" cannot be found";
+                    ErrorMSg errorMSg = new ErrorMSg(msg, LocalDateTime.now(), exception.getMessage());
+                    return errorMSg;
+                }
+            }
+            return guardianRepo.save(existingGuardian);
         }catch(PatientNotFound exception){
             String mesg = "The guardian with id " +  g_id + " Cannot be found";
             ErrorMSg errorMSg = new ErrorMSg(mesg , LocalDateTime.now(), exception.getMessage());
             return errorMSg;
         }
-
-        if(existingGuardian!=null){
-            if(guardian.getFirstName() != null){
-                existingGuardian.setFirstName(guardian.getFirstName());
-            }
-
-            if(guardian.getLastName() != null){
-                existingGuardian.setLastName(guardian.getLastName());
-            }
-
-            if(guardian.getAddress() != null) {
-                existingGuardian.setAddress(guardian.getAddress());
-            }
-
-            if(guardian.getPhone() != null){
-                existingGuardian.setPhone(guardian.getPhone());
-            }
-            if(guardian.getPatients() != null){
-                existingGuardian.setPatients(guardian.getPatients());
-            }
-            return existingGuardian;
-        }else if((existingGuardian==null || existingGuardian.getPatients()==null)&&id!=null){
-
-            try{
-                Patient existingPatient = patientRepo.findById(id).orElseThrow(()->new PatientNotFound("patient cannot be found"));
-                Set<Patient> existingPatintSet = existingGuardian.getPatients();
-                existingPatintSet.add(existingPatient);
-                existingGuardian.setPatients(existingPatintSet);
-                return existingGuardian;
-            }catch(PatientNotFound exception){
-                String msg = "The Patient with id : " + id +" cannot be found";
-                ErrorMSg errorMSg = new ErrorMSg(msg, LocalDateTime.now(), exception.getMessage());
-                return errorMSg;
-            }
-        }
-
-
-        return null;
     }
 }
