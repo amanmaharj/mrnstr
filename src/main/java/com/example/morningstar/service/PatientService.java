@@ -102,4 +102,15 @@ public class PatientService {
         }
 
     }
+
+    public Object getPatientById(Long id) {
+        try{
+            Patient patient = patientRepo.findById(id).orElseThrow(()-> new PatientNotFound("couldn't find the patient"));
+            return patient;
+        }catch(PatientNotFound exception){
+            String message = "Cannot find the patient of id: " + id ;
+            ErrorMSg errorMSg = new ErrorMSg(message, LocalDateTime.now(), exception.getMessage());
+            return errorMSg;
+        }
+    }
 }

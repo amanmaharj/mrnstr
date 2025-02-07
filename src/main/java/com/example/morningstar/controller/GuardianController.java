@@ -27,6 +27,10 @@ public class GuardianController {
     public ResponseEntity<?> deleteFromDbByID(@PathVariable Long id) {
         return new ResponseEntity<>(guardianService.deleteByID(id), HttpStatus.OK);
     }
+    @GetMapping("/unique-guardian/{g_id}")
+    public ResponseEntity<?> getById(@PathVariable long g_id){
+        return new ResponseEntity<>(guardianService.getById(g_id), HttpStatus.OK);
+    }
 
     @PutMapping("/{g_id}/update-parent")
     public ResponseEntity<Object> updateGuardian(@RequestBody(required = false) Guardian guardian,@PathVariable Long g_id, @RequestParam(name = "id", required = false) Long id){

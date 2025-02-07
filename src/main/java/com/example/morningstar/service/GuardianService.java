@@ -110,4 +110,16 @@ public class GuardianService {
             return errorMSg;
         }
     }
+
+    public Object getById(long g_id) {
+        try{
+            Guardian guardian = guardianRepo.findById(g_id).orElseThrow(()->new PatientNotFound("could not find the Patient"));
+            return guardian;
+        }catch(PatientNotFound exception){
+            String err = "The guardian with id " + g_id + " cannot be found";
+            ErrorMSg errorMSg1 = new ErrorMSg(err, LocalDateTime.now(), exception.getMessage());
+            return errorMSg1;
+        }
+
+    }
 }
